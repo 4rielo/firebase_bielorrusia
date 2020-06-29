@@ -10,11 +10,29 @@ const database = firebase.database();
 const rootRef = database.ref('users');
 
 addBtn.addEventListener('click', (e) => {
-    alert('Botón');
     e.preventDefault();
-    rootRef.child(cuserId.value).set({
+    const autoId = rootRef.push().key
+    rootRef.child(autoId).set({
         first_name: firstName.value,
         last_name: lastName.value,
         age: age.value,
     });
-})
+});
+
+updateBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const newData = {
+        age: age.value,
+        first_name: firstName.value,
+        last_name: lastName.value
+    };
+    const updates = {};
+    updates['/users/' + userId.value] = newData;
+    //updates['/super-users/' + userId.value] = newData;
+    database.ref().update(updates);
+
+});
+
+removeBtn.addEventListener('click', e => {
+
+});
